@@ -1,5 +1,6 @@
 import os
 import json
+import subprocess
 
 
 CONFIG_SAMPLE_PATH = "/var/www/test.msg.mybusines.app/msg/config.sample.json"
@@ -9,6 +10,9 @@ WELCOME_HTML = "./qn-messenger-web/res/welcome.html"
 INDEX_HTML = "./qn-messenger-web/src/vector/index.html"
 TRANSLATIONS_PATH = "./qn-messenger-web/src/i18n/strings/"
 
+REACT_SDK_LOGIN_PAGE = "./qn-matrix-react-sdk/src/components/structures/MatrixChat.tsx"
+REACT_SDK_HOMEPAGE = "./qn-matrix-react-sdk/src/components/structures/HomePage.tsx"
+
 HOMESERVER = input("homeserver url: ")
 SERVER_NAME = input("server name: ")
 JITSI_URL = input("jitsi url: ")
@@ -16,7 +20,7 @@ BRAND_NAME = input("brand: ")
 REGISTRATION_URL = input("registration url: ")
 API_URL = input("api url: ")
 
-LOGO = ""
+IMAGES_DIR = "./images/" + input("images directory (no slash in the end): ")
 
 
 class CreateConfig:
@@ -99,6 +103,68 @@ class EditTranslations:
         print("Done!")
 
 
-class ModifyImages:
+class EditRegistrationURL:
     def __init__(self):
-        pass
+        print("Editing registration links")
+
+        def modify_welcome():
+            with open(WELCOME_HTML, "r") as html_file:
+                html_data = html_file.read()
+
+            with open(WELCOME_HTML, "w") as html_file:
+                html_file.write(
+                    html_data.replace(
+                        "#/register", REGISTRATION_URL
+                    )
+                )
+
+        def modify_login_page():
+            with open(REACT_SDK_LOGIN_PAGE, "r") as tsx_file:
+                tsx_data = tsx_file.read()
+
+            with open(REACT_SDK_LOGIN_PAGE, "w") as tsx_file:
+                tsx_file.write(
+                    tsx_data.replace(
+                        'this.showScreen("forgot_password");',
+                        f'window.open("{REGISTRATION_URL}");'
+                    ).replace(
+                        'this.showScreen("register");',
+                        'window.open("https://qaim.me/auth");'
+                    )
+                )
+        modify_welcome()
+        modify_login_page()
+
+        print("Done!")
+
+
+class ChangeLogos:
+    def __init__(self):
+        favicon = f"{IMAGES_DIR}/favicon.ico"
+        logo = f"{IMAGES_DIR}/logo.svg"
+
+        def replace_favicon():
+            replace_command = "rm ./qn-messenger-web/res/vector-icons/favicon.ico && " \
+                              f"cp {favicon} ./qn-messenger-web/res/vector-icons/"
+            fav_replace = subprocess.Popen(
+                replace_command, stdout=subprocess.PIPE, shell=True
+            )
+            out = fav_replace.stdout.read().decode()
+            print(out)
+
+        def replace_logos():
+            replace_command = "rm ./qn-messenger-web/res/themes/element/" \
+                              "logos/element-logo.svg && " \
+                              "rm ./qn-messenger-web/res/welcome/images/logo.svg && " \
+                              f"cp {logo} ./qn-messenger-web/res/themes/element/" \
+                              f"logos/element-logo.svg && " \
+                              f"cp {logo} ./qn-messenger-web/res/welcome/" \
+                              f"images/logo.svg"
+            logo_replace = subprocess.Popen(
+                replace_command, stdout=subprocess.PIPE, shell=True
+            )
+            out = logo_replace.stdout.read().decode()
+            print(out)
+
+        replace_favicon()
+        replace_logos()
