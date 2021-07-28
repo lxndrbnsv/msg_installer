@@ -64,7 +64,7 @@ class Install:
 class Untar:
     def __init__(self):
         dist_name = os.listdir("./qn-messenger-web")[0]
-        untar_command = f"cd /var/www/{MESSENGER_PATH} && " \
+        untar_command = f"cp ./qn-messenger-web/{dist_name} {MESSENGER_PATH} {MESSENGER_PATH} && " \
                         f"tar -zxvf {dist_name} && ln -s {dist_name} msg"
         untar = subprocess.Popen(untar_command, stdout=subprocess.PIPE, shell=True)
         out = untar.stdout.read().decode()
