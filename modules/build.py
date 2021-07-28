@@ -91,4 +91,3 @@ class RemovePreviousVersion:
         )
         out = remove.stdout.read().decode()
         print(out)
-

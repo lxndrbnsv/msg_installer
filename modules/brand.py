@@ -91,7 +91,7 @@ class EditTranslations:
             for string_to_translate in strings_to_translate:
                 try:
                     translated_text = json_data[string_to_translate]
-                    json_data[translated_text.replace(
+                    json_data[string_to_translate.replace(
                         "Element", BRAND_NAME
                     )] = translated_text.replace("Element", BRAND_NAME)
                 except KeyError:
