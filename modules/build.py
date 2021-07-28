@@ -55,3 +55,8 @@ class Install:
         install_js_sdk()
         install_react_sdk()
         build_messenger()
+
+
+class Untar:
+    def __init__(self):
+        pass
