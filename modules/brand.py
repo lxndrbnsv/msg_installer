@@ -153,10 +153,10 @@ class ChangeLogos:
             print(out)
 
         def replace_logos():
-            replace_command = "rm ./qn-messenger-web/res/themes/element/" \
+            replace_command = "rm ./qn-messenger-web/res/themes/element/img/" \
                               "logos/element-logo.svg && " \
                               "rm ./qn-messenger-web/res/welcome/images/logo.svg && " \
-                              f"cp {logo} ./qn-messenger-web/res/themes/element/" \
+                              f"cp {logo} ./qn-messenger-web/res/themes/element/img/" \
                               f"logos/element-logo.svg && " \
                               f"cp {logo} ./qn-messenger-web/res/welcome/" \
                               f"images/logo.svg"

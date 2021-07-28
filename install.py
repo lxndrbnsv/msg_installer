@@ -1,4 +1,4 @@
-from modules.build import GetRepos, Install, Untar
+from modules.build import GetRepos, Install, Untar, RemoveSource, RemovePreviousVersion
 from modules.brand import (
     CreateConfig,
     AddBrandName,
@@ -9,11 +9,13 @@ from modules.brand import (
 
 
 if __name__ == "__main__":
+    RemoveSource()
     GetRepos()
     AddBrandName()
     EditTranslations()
     EditRegistrationURL()
     ChangeLogos()
     Install()
+    RemovePreviousVersion()
     Untar()
     CreateConfig()

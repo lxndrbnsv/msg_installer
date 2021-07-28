@@ -16,7 +16,7 @@ class GetRepos:
             print(out)
 
 
-MESSENGER_PATH = "/var/www/test.msg.mybusines.app/"
+MESSENGER_PATH = input("messenger directory (with slash in the end): ")
 
 
 class Install:
@@ -71,3 +71,24 @@ class Untar:
         untar = subprocess.Popen(untar_command, stdout=subprocess.PIPE, shell=True)
         out = untar.stdout.read().decode()
         print(out)
+
+
+class RemoveSource:
+    def __init__(self):
+        remove_command = "rm -rf qn-m*"
+        remove = subprocess.Popen(
+            remove_command, stdout=subprocess.PIPE, shell=True
+        )
+        out = remove.stdout.read().decode()
+        print(out)
+
+
+class RemovePreviousVersion:
+    def __init__(self):
+        remove_command = f"rm -rf {MESSENGER_PATH}*"
+        remove = subprocess.Popen(
+            remove_command, stdout=subprocess.PIPE, shell=True
+        )
+        out = remove.stdout.read().decode()
+        print(out)
+
