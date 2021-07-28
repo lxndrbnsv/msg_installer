@@ -2,33 +2,26 @@ import os
 import json
 
 
-CONFIG_SAMPLE_PATH = "../qn-messenger-web/config.sample.json"
-CONFIG_PATH = "../qn-messenger-web/config.json"
+CONFIG_SAMPLE_PATH = "/var/www/test.msg.mybusines.app/msg/config.sample.json"
+CONFIG_PATH = "/var/www/test.msg.mybusines.app/msg/config.json"
 
-WELCOME_HTML = "../qn-messenger-web/res/welcome.html"
-INDEX_HTML = "../qn-messenger-web/src/vector/index.html"
-TRANSLATIONS_PATH = "../qn-messenger-web/src/i18n/strings/"
+WELCOME_HTML = "./qn-messenger-web/res/welcome.html"
+INDEX_HTML = "./qn-messenger-web/src/vector/index.html"
+TRANSLATIONS_PATH = "./qn-messenger-web/src/i18n/strings/"
 
-# HOMESERVER = input("homeserver url: ")
-# SERVER_NAME = input("server name: ")
-# JITSI_URL = input("jitsi url: ")
-# BRAND_NAME = input("brand: ")
-# REGISTRATION_URL = input("registration url: ")
-# API_URL = input("api url: ")
-
-HOMESERVER = "TEST"
-SERVER_NAME = "TEST"
-JITSI_URL = "TEST"
-BRAND_NAME = "TEST"
-REGISTRATION_URL = "TEST"
-API_URL = "TEST"
+HOMESERVER = input("homeserver url: ")
+SERVER_NAME = input("server name: ")
+JITSI_URL = input("jitsi url: ")
+BRAND_NAME = input("brand: ")
+REGISTRATION_URL = input("registration url: ")
+API_URL = input("api url: ")
 
 LOGO = ""
 
 
 class CreateConfig:
     def __init__(self):
-        print("Generating config file...")
+        print("Generating config file..")
         with open(CONFIG_SAMPLE_PATH, "r") as json_file:
             config_sample_data = json.load(json_file)
 
