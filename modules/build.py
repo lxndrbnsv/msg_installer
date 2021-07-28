@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 
@@ -13,6 +14,9 @@ class GetRepos:
             command = subprocess.Popen(clone_repo, stdout=subprocess.PIPE, shell=True)
             out = command.stdout.read().decode()
             print(out)
+
+
+MESSENGER_PATH = "/var/www/test.msg.mybusines.app/"
 
 
 class Install:
@@ -59,4 +63,9 @@ class Install:
 
 class Untar:
     def __init__(self):
-        pass
+        dist_name = os.listdir("./qn-messenger-web")[0]
+        untar_command = f"cd /var/www/{MESSENGER_PATH} && " \
+                        f"tar -zxvf {dist_name} && ln -s {dist_name} msg"
+        untar = subprocess.Popen(untar_command, stdout=subprocess.PIPE, shell=True)
+        out = untar.stdout.read().decode()
+        print(out)
