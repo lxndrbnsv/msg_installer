@@ -1,6 +1,8 @@
 import os
 import subprocess
 
+from modules.utils import ReadConfig
+
 
 class GetRepos:
     def __init__(self):
@@ -14,9 +16,6 @@ class GetRepos:
             command = subprocess.Popen(clone_repo, stdout=subprocess.PIPE, shell=True)
             out = command.stdout.read().decode()
             print(out)
-
-
-MESSENGER_PATH = input("messenger directory (with slash in the end): ")
 
 
 class Install:
@@ -63,9 +62,10 @@ class Install:
 
 class Untar:
     def __init__(self):
+        messenger_path = ReadConfig().messenger_path
         dist_name = os.listdir("./qn-messenger-web/dist")[0]
         untar_command = f"cp ./qn-messenger-web/dist/{dist_name} " \
-                        f"{MESSENGER_PATH} && cd {MESSENGER_PATH} && " \
+                        f"{messenger_path} && cd {messenger_path} && " \
                         f"tar -zxvf {dist_name} && ln" \
                         f" -s {dist_name.replace('.tar.gz', '')} msg"
         untar = subprocess.Popen(untar_command, stdout=subprocess.PIPE, shell=True)
@@ -85,7 +85,8 @@ class RemoveSource:
 
 class RemovePreviousVersion:
     def __init__(self):
-        remove_command = f"rm -rf {MESSENGER_PATH}*"
+
+        remove_command = f"rm -rf {ReadConfig().messenger_path}*"
         remove = subprocess.Popen(
             remove_command, stdout=subprocess.PIPE, shell=True
         )

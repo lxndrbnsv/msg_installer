@@ -2,45 +2,28 @@ import os
 import json
 import subprocess
 
-
-CONFIG_SAMPLE_PATH = "/var/www/test.msg.mybusines.app/msg/config.sample.json"
-CONFIG_PATH = "/var/www/test.msg.mybusines.app/msg/config.json"
-
-WELCOME_HTML = "./qn-messenger-web/res/welcome.html"
-INDEX_HTML = "./qn-messenger-web/src/vector/index.html"
-TRANSLATIONS_PATH = "./qn-messenger-web/src/i18n/strings/"
-
-REACT_SDK_LOGIN_PAGE = "./qn-matrix-react-sdk/src/components/structures/MatrixChat.tsx"
-REACT_SDK_HOMEPAGE = "./qn-matrix-react-sdk/src/components/structures/HomePage.tsx"
-
-HOMESERVER = input("homeserver url: ")
-SERVER_NAME = input("server name: ")
-JITSI_URL = input("jitsi url: ")
-BRAND_NAME = input("brand: ")
-REGISTRATION_URL = input("registration url: ")
-API_URL = input("api url: ")
-
-IMAGES_DIR = "./images/" + input("images directory (no slash in the end): ")
+from modules.utils import ReadConfig
 
 
 class CreateConfig:
     def __init__(self):
+        cfg = ReadConfig()
         print("Generating config file..")
-        with open(CONFIG_SAMPLE_PATH, "r") as json_file:
+        with open(cfg.config_sample_path, "r") as json_file:
             config_sample_data = json.load(json_file)
 
         config_sample_data["default_server_config"]["m.homeserver"][
             "base_url"
-        ] = HOMESERVER
+        ] = cfg.homeserver
         config_sample_data["default_server_config"]["m.homeserver"][
             "server_name"
-        ] = SERVER_NAME
-        config_sample_data["brand"] = BRAND_NAME
+        ] = cfg.server_name
+        config_sample_data["brand"] = cfg.brand_name
         config_sample_data["default_federate"] = False
-        config_sample_data["jitsi"]["preferredDomain"] = JITSI_URL
+        config_sample_data["jitsi"]["preferredDomain"] = cfg.jitsi_url
 
         config = json.dumps(config_sample_data, indent=2)
-        with open(CONFIG_PATH, "w") as json_file:
+        with open(cfg.config_path, "w") as json_file:
             json_file.write(config)
 
         print("Done!")
@@ -48,23 +31,25 @@ class CreateConfig:
 
 class AddBrandName:
     def __init__(self):
+        cfg = ReadConfig()
+
         def edit_index():
             print("Changing names in index.html")
-            with open(INDEX_HTML, "r") as html_file:
+            with open(cfg.index_html, "r") as html_file:
                 html_data = html_file.read()
 
-            with open(INDEX_HTML, "w") as html_file:
-                html_file.write(html_data.replace("Element", BRAND_NAME))
+            with open(cfg.index_html, "w") as html_file:
+                html_file.write(html_data.replace("Element", cfg.brand_name))
 
             print("Done!")
 
         def edit_welcome():
             print("Changing names in welcome.html")
-            with open(WELCOME_HTML, "r") as html_file:
+            with open(cfg.welcome_html, "r") as html_file:
                 html_data = html_file.read()
 
-            with open(WELCOME_HTML, "w") as html_file:
-                html_file.write(html_data.replace("Element", BRAND_NAME))
+            with open(cfg.welcome_html, "w") as html_file:
+                html_file.write(html_data.replace("Element", cfg.brand_name))
 
             print("Done!")
 
@@ -74,6 +59,8 @@ class AddBrandName:
 
 class EditTranslations:
     def __init__(self):
+        cfg = ReadConfig()
+
         print("Updating translations")
         strings_to_translate = [
             "Welcome to Element",
@@ -82,9 +69,9 @@ class EditTranslations:
             "Your Element is misconfigured"
         ]
 
-        translation_files = os.listdir(TRANSLATIONS_PATH)
+        translation_files = os.listdir(cfg.translations_path)
         for t in translation_files:
-            file_path = TRANSLATIONS_PATH + t
+            file_path = cfg.translations_path + t
             with open(file_path, "r") as json_file:
                 json_data = json.load(json_file)
 
@@ -92,8 +79,8 @@ class EditTranslations:
                 try:
                     translated_text = json_data[string_to_translate]
                     json_data[string_to_translate.replace(
-                        "Element", BRAND_NAME
-                    )] = translated_text.replace("Element", BRAND_NAME)
+                        "Element", cfg.brand_name
+                    )] = translated_text.replace("Element", cfg.brand_name)
                 except KeyError:
                     pass
             new_data = json.dumps(json_data, indent=4, ensure_ascii=False)
@@ -105,31 +92,33 @@ class EditTranslations:
 
 class EditRegistrationURL:
     def __init__(self):
+        cfg = ReadConfig()
+
         print("Editing registration links")
 
         def modify_welcome():
-            with open(WELCOME_HTML, "r") as html_file:
+            with open(cfg.welcome_html, "r") as html_file:
                 html_data = html_file.read()
 
-            with open(WELCOME_HTML, "w") as html_file:
+            with open(cfg.welcome_html, "w") as html_file:
                 html_file.write(
                     html_data.replace(
-                        "#/register", REGISTRATION_URL
+                        "#/register", f"{cfg.registration_url}?returl={cfg.messenger_url}"
                     )
                 )
 
         def modify_login_page():
-            with open(REACT_SDK_LOGIN_PAGE, "r") as tsx_file:
+            with open(cfg.react_sdk_login_page, "r") as tsx_file:
                 tsx_data = tsx_file.read()
 
-            with open(REACT_SDK_LOGIN_PAGE, "w") as tsx_file:
+            with open(cfg.react_sdk_login_page, "w") as tsx_file:
                 tsx_file.write(
                     tsx_data.replace(
                         'this.showScreen("forgot_password");',
-                        f'window.open("{REGISTRATION_URL}");'
+                        f'location.href="{cfg.forgot_password_url}&returl=" + location.href;'
                     ).replace(
                         'this.showScreen("register");',
-                        'window.open("https://qaim.me/auth");'
+                        f'location.href = "{cfg.registration_url}?returl=" + location.href;'
                     )
                 )
         modify_welcome()
@@ -140,8 +129,10 @@ class EditRegistrationURL:
 
 class ChangeLogos:
     def __init__(self):
-        favicon = f"{IMAGES_DIR}/favicon.ico"
-        logo = f"{IMAGES_DIR}/logo.svg"
+        cfg = ReadConfig()
+
+        favicon = f"{cfg.images_dir}/favicon.ico"
+        logo = f"{cfg.images_dir}/logo.svg"
 
         def replace_favicon():
             replace_command = "rm ./qn-messenger-web/res/vector-icons/favicon.ico && " \

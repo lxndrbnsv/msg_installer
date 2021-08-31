@@ -4,18 +4,18 @@ from modules.brand import (
     AddBrandName,
     EditTranslations,
     EditRegistrationURL,
-    ChangeLogos
+    ChangeLogos,
 )
 
 
 if __name__ == "__main__":
-    RemoveSource()
+    # RemoveSource()
     GetRepos()
-    AddBrandName()
-    EditTranslations()
-    EditRegistrationURL()
-    ChangeLogos()
-    Install()
-    RemovePreviousVersion()
-    Untar()
-    CreateConfig()
+    # AddBrandName()
+    # EditTranslations()
+    # EditRegistrationURL()
+    # ChangeLogos()
+    # Install()
+    # RemovePreviousVersion()
+    # Untar()
+    # CreateConfig()

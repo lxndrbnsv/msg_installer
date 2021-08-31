@@ -1,0 +1,19 @@
+{
+  "config_sample_path": "/var/www/test.msg.mybusines.app/msg/config.sample.json",
+  "config_path": "/var/www/test.msg.mybusines.app/msg/config.json",
+  "welcome_html": "./qn-messenger-web/res/welcome.html",
+  "index_html": "./qn-messenger-web/src/vector/index.html",
+  "translations_path": "./qn-messenger-web/src/i18n/strings/",
+  "react_sdk_login_page": "./qn-matrix-react-sdk/src/components/structures/MatrixChat.tsx",
+  "react_sdk_homepage": "./qn-matrix-react-sdk/src/components/structures/HomePage.tsx",
+  "homeserver": "https://test.matrix.mybusines.app",
+  "server_name": "test.mybusines,app",
+  "jitsi_url": "jitsi.mybusines.app",
+  "brand_name": "TEST",
+  "registration_url": "https://mybusines.app/auth",
+  "forgot_password_url": "https://mybusines.app/auth?reset",
+  "api_url": "https://test.mybusines.app/api",
+  "messenger_url": "https://test.msg.mybusines.app",
+  "images_dir": "./images/mybusines",
+  "messenger_path": "/var/www/test.msg.mybusines.app/"
+}
