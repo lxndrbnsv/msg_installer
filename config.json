@@ -15,5 +15,8 @@
   "api_url": "https://test.mybusines.app/api",
   "messenger_url": "https://test.msg.mybusines.app",
   "images_dir": "./images/mybusines",
-  "messenger_path": "/var/www/test.msg.mybusines.app/"
+  "messenger_path": "/var/www/test.msg.mybusines.app/",
+  "mobile_guide_path": "./qn-messenger-web/src/vector/mobile_guide/index.html",
+  "android_app_url": "https://mybusines.app/_downloadapp.php?app=MyBusiness&platform=Android",
+  "ios_app_url": "https://mybusines.app/_downloadapp.php?app=MyBusiness&platform=iOS"
 }

@@ -53,8 +53,24 @@ class AddBrandName:
 
             print("Done!")
 
+        def edit_mobile_guide():
+            print("Changing names in mobile_guide...")
+            with open(cfg.mobile_guide_path, "r") as html_file:
+                html_data = html_file.read()
+
+            with open(cfg.mobile_guide_path, "w") as html_file:
+                html_file.write(
+                    html_data.replace(
+                        "Set up Element on iOS or Android",
+                        f"Set up {cfg.brand_name} on iOS or Android"
+                    )
+                )
+
+            print("Done!")
+
         edit_index()
         edit_welcome()
+        edit_mobile_guide()
 
 
 class EditTranslations:
@@ -159,3 +175,23 @@ class ChangeLogos:
 
         replace_favicon()
         replace_logos()
+
+
+class EditMobileLinks:
+    def __init__(self):
+        cfg = ReadConfig()
+        print("Changing links in mobile guide...")
+        with open(cfg.mobile_guide_path, "r") as html_file:
+            html_data = html_file.read()
+        with open(cfg.mobile_guide_path, "w") as html_file:
+            html_file.write(
+                html_data.replace(
+                    "https://apps.apple.com/app/vector/id1083446067",
+                    cfg.ios_app_url
+                ).replace(
+                    "https://play.google.com/store/apps/details?id=im.vector.app",
+                    cfg.android_app_url
+                )
+            )
+
+        print("Done!")

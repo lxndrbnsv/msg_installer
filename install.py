@@ -5,16 +5,17 @@ from modules.brand import (
     EditTranslations,
     EditRegistrationURL,
     ChangeLogos,
+    EditMobileLinks
 )
-
 
 if __name__ == "__main__":
     # RemoveSource()
-    GetRepos()
-    # AddBrandName()
-    # EditTranslations()
-    # EditRegistrationURL()
-    # ChangeLogos()
+    # GetRepos()
+    AddBrandName()
+    EditTranslations()
+    EditRegistrationURL()
+    ChangeLogos()
+    EditMobileLinks()
     # Install()
     # RemovePreviousVersion()
     # Untar()

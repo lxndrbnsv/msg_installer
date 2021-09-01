@@ -23,3 +23,6 @@ class ReadConfig:
         self.messenger_url = config_data["messenger_url"]
         self.images_dir = config_data["images_dir"]
         self.messenger_path = config_data["messenger_path"]
+        self.mobile_guide_path = config_data["mobile_guide_path"]
+        self.android_app_url = config_data["android_app_url"]
+        self.ios_app_url = config_data["ios_app_url"]
